@@ -11,8 +11,13 @@ fn main() {
     let tray_menu = SystemTrayMenu::new().add_item(quit);
     let tray = SystemTray::new().with_menu(tray_menu);
 
+    let settings_dir = directories::BaseDirs::new()
+        .expect("Could not get HOME directory")
+        .config_dir()
+        .join("kimai-tauri-settings.toml");
     let state = ApplicationState(Mutex::new(ApplicationStateInner {
         settings: settings::load_settings().ok(),
+        settings_dir,
     }));
 
     tauri::Builder::default()

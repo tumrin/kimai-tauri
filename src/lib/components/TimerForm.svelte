@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ActivityCollection, CustomerCollection, ProjectCollection } from '$lib/types'
+  import type { ActivityCollection, ProjectCollection } from '$lib/types'
   import { allActivitiesStore, allCustomersStore, allProjectsStore } from '$lib/stores/customers'
 
   export let handleSubmit: any

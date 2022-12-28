@@ -1,6 +1,5 @@
 import { apiKey, apiUrl, username } from '$lib/stores/apiKey'
-import { timesheetEntityStore } from '$lib/stores/timesheet'
-import type { TimesheetCollectionExpanded, TimesheetEditForm, TimesheetEntity } from '$lib/types'
+import type { TimesheetCollectionExpanded, TimesheetEditForm } from '$lib/types'
 import { get } from 'svelte/store'
 
 export const createTimesheet = async (project: number, activity: number, description: string, user: number) => {
@@ -19,12 +18,11 @@ export const createTimesheet = async (project: number, activity: number, descrip
     method: 'POST',
     body: JSON.stringify(body),
   })
-  let timesheet: TimesheetEntity = await response.json()
-  timesheetEntityStore.set(timesheet)
+  return await response.json();
 }
 
 export const stopTimer = async (id?: number) => {
-  let response = await fetch(`${get(apiUrl)}/timesheets/${id}/stop`, {
+  await fetch(`${get(apiUrl)}/timesheets/${id}/stop`, {
     headers: {
       'X-AUTH-USER': get(username),
       'X-AUTH-TOKEN': get(apiKey),
@@ -35,8 +33,32 @@ export const stopTimer = async (id?: number) => {
   })
 }
 
-export const getActiveTimers = async (): Promise<TimesheetCollectionExpanded[]> => {
+export const restartTimer = async (id?: number) => {
+  let response = await fetch(`${get(apiUrl)}/timesheets/${id}/restart`, {
+    headers: {
+      'X-AUTH-USER': get(username),
+      'X-AUTH-TOKEN': get(apiKey),
+      'Content-Type': 'application/json',
+    },
+    method: 'PATCH',
+    body: JSON.stringify({ id, copy: "description" }),
+  })
+  return await response.json();
+}
+
+export const fetchActiveTimers = async (): Promise<TimesheetCollectionExpanded[]> => {
   let response = await fetch(`${get(apiUrl)}/timesheets/active`, {
+    headers: {
+      'X-AUTH-USER': get(username),
+      'X-AUTH-TOKEN': get(apiKey),
+    },
+    method: 'GET',
+  })
+  return await response.json()
+}
+
+export const fetchRecentTimers = async (): Promise<TimesheetCollectionExpanded[]> => {
+  let response = await fetch(`${get(apiUrl)}/timesheets/recent`, {
     headers: {
       'X-AUTH-USER': get(username),
       'X-AUTH-TOKEN': get(apiKey),

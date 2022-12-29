@@ -1,14 +1,14 @@
 use serde::{Deserialize, Serialize};
-use std::{fs, io};
+use std::{fs, io, path::PathBuf};
 
-#[derive(Deserialize, Serialize, Clone)]
+#[derive(Deserialize, Serialize, Clone, Debug)]
 pub struct Settings {
     pub kimai_user: Option<String>,
     pub api_url: Option<String>,
 }
 
-pub fn load_settings() -> Result<Settings, io::Error> {
-    let file = fs::read("./settings.toml")?;
+pub fn load_settings(settings_dir: &PathBuf) -> Result<Settings, io::Error> {
+    let file = fs::read(settings_dir)?;
     let toml_file = toml::from_slice::<toml::Value>(&file)?;
 
     Ok(Settings {

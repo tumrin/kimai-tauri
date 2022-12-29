@@ -15,8 +15,9 @@ fn main() {
         .expect("Could not get HOME directory")
         .config_dir()
         .join("kimai-tauri-settings.toml");
+
     let state = ApplicationState(Mutex::new(ApplicationStateInner {
-        settings: settings::load_settings().ok(),
+        settings: settings::load_settings(&settings_dir).ok(),
         settings_dir,
     }));
 

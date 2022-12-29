@@ -26,4 +26,12 @@
   }
 </script>
 
-<button on:click={logout}>Logout</button>
+<div class="logout">
+  <button on:click={logout}>Logout</button>
+</div>
+
+<style lang="scss">
+  .logout {
+    display: flex;
+  }
+</style>

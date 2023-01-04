@@ -1,14 +1,36 @@
 <script lang="ts">
   import type { ActivityCollection, ProjectCollection } from '$lib/types'
   import { allActivitiesStore, allCustomersStore, allProjectsStore } from '$lib/stores/customers'
+  import { initialInfoStore, timerStartedStore, timesheetEntityStore } from '$lib/stores/timesheet'
+  import { notificationPermissionStore, userStore } from '$lib/stores/user'
+  import { goto } from '$app/navigation'
+  import { createTimesheet } from '$lib/apiFetchers/timesheets'
+  import { sendNotification } from '@tauri-apps/api/notification'
+  import { errorStore } from '$lib/stores/error'
 
-  export let handleSubmit: any
   let customersProjects: ProjectCollection[] = []
   let customersActivities: ActivityCollection[] = []
   let project: any
   let customer: any = null // Needs to be null so no customer is chosen by default
   let activity: any
   let description: any
+
+  const handleSubmit = (project: number, activity: number, description: string) => {
+    initialInfoStore.set({ project, activity, description })
+    if (!$userStore) {
+      goto('/login')
+      return
+    }
+    createTimesheet(project, activity, description, $userStore.id)
+      .then((timesheet) => {
+        timesheetEntityStore.set(timesheet)
+        if ($notificationPermissionStore) {
+          sendNotification('Timer started')
+        }
+      })
+      .catch((error) => errorStore.set(error))
+    $timerStartedStore = true
+  }
 </script>
 
 <div class="timeform">

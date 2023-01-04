@@ -18,11 +18,11 @@ export const createTimesheet = async (project: number, activity: number, descrip
     method: 'POST',
     body: JSON.stringify(body),
   })
-  return await response.json();
+  return await response.json()
 }
 
 export const stopTimer = async (id?: number) => {
-  await fetch(`${get(apiUrl)}/timesheets/${id}/stop`, {
+  let response = await fetch(`${get(apiUrl)}/timesheets/${id}/stop`, {
     headers: {
       'X-AUTH-USER': get(username),
       'X-AUTH-TOKEN': get(apiKey),
@@ -31,6 +31,9 @@ export const stopTimer = async (id?: number) => {
     method: 'PATCH',
     body: JSON.stringify({ id }),
   })
+  if (!response.ok) {
+    throw Error('Could not stop timer')
+  }
 }
 
 export const restartTimer = async (id?: number) => {
@@ -41,9 +44,9 @@ export const restartTimer = async (id?: number) => {
       'Content-Type': 'application/json',
     },
     method: 'PATCH',
-    body: JSON.stringify({ id, copy: "description" }),
+    body: JSON.stringify({ id, copy: 'description' }),
   })
-  return await response.json();
+  return await response.json()
 }
 
 export const fetchActiveTimers = async (): Promise<TimesheetCollectionExpanded[]> => {

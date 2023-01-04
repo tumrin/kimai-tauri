@@ -1,4 +1,5 @@
 import type { UserEntity } from '$lib/types'
-import { writable } from 'svelte/store'
+import { writable, type Writable } from 'svelte/store'
 
-export let userStore = writable({} as UserEntity)
+export let userStore: Writable<UserEntity | null> = writable(null)
+export let notificationPermissionStore = writable(false)

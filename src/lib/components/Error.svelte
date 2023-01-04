@@ -4,14 +4,20 @@
 
 {#if $errorStore}
   <div class="error">
+    <button on:click={() => errorStore.set('')}>Clear Error</button>
     <h2>{$errorStore}</h2>
-    <button>Clear</button>
   </div>
 {/if}
 
 <style lang="scss">
   .error {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    button {
+      padding: 1rem;
+      max-width: 15vw;
+    }
   }
 </style>

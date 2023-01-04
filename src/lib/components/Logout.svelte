@@ -2,6 +2,7 @@
   import { goto } from '$app/navigation'
   import { apiKey, apiUrl, username } from '$lib/stores/apiKey'
   import { allActivitiesStore, allCustomersStore, allProjectsStore } from '$lib/stores/customers'
+  import { errorStore } from '$lib/stores/error'
   import { timesheetEntityStore, timesheetStore } from '$lib/stores/timesheet'
   import { userStore } from '$lib/stores/user'
   import type { ActivityCollection, CustomerCollection, ProjectCollection, TimesheetCollectionExpanded, TimesheetEntity, UserEntity } from '$lib/types'
@@ -20,7 +21,7 @@
     try {
       await invoke('logout')
     } catch (error) {
-      console.log('Tauri invokation error: ', error)
+      errorStore.set('Could not logout')
     }
     goto('/login')
   }

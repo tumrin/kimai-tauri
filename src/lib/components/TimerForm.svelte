@@ -2,7 +2,7 @@
   import type { ActivityCollection, ProjectCollection } from '$lib/types'
   import { allActivitiesStore, allCustomersStore, allProjectsStore } from '$lib/stores/customers'
   import { initialInfoStore, timerStartedStore, timesheetEntityStore } from '$lib/stores/timesheet'
-  import { notificationPermissionStore, userStore } from '$lib/stores/user'
+  import { notificationPermissionStore, pendingRequestStore, userStore } from '$lib/stores/user'
   import { goto } from '$app/navigation'
   import { createTimesheet } from '$lib/apiFetchers/timesheets'
   import { sendNotification } from '@tauri-apps/api/notification'
@@ -23,12 +23,13 @@
     }
     createTimesheet(project, activity, description, $userStore.id)
       .then((timesheet) => {
-        timesheetEntityStore.set(timesheet)
+        $timesheetEntityStore = timesheet
         if ($notificationPermissionStore) {
           sendNotification('Timer started')
         }
       })
       .catch((error) => errorStore.set(error))
+      .finally(() => pendingRequestStore.set(null))
     $timerStartedStore = true
   }
 </script>

@@ -33,6 +33,6 @@
 
 <style lang="scss">
   .logout {
-    display: flex;
+    align-self: center;
   }
 </style>

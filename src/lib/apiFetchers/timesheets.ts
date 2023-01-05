@@ -1,8 +1,10 @@
 import { apiKey, apiUrl, username } from '$lib/stores/apiKey'
+import { ApiRequests, pendingRequestStore } from '$lib/stores/user'
 import type { TimesheetCollectionExpanded, TimesheetEditForm } from '$lib/types'
 import { get } from 'svelte/store'
 
 export const createTimesheet = async (project: number, activity: number, description: string, user: number) => {
+  pendingRequestStore.set(ApiRequests.CreateTimer)
   let body: TimesheetEditForm = {
     project,
     activity,
@@ -22,6 +24,7 @@ export const createTimesheet = async (project: number, activity: number, descrip
 }
 
 export const stopTimer = async (id?: number) => {
+  pendingRequestStore.set(ApiRequests.StopTimer)
   let response = await fetch(`${get(apiUrl)}/timesheets/${id}/stop`, {
     headers: {
       'X-AUTH-USER': get(username),
@@ -37,6 +40,7 @@ export const stopTimer = async (id?: number) => {
 }
 
 export const restartTimer = async (id?: number) => {
+  pendingRequestStore.set(ApiRequests.RestartTimer)
   let response = await fetch(`${get(apiUrl)}/timesheets/${id}/restart`, {
     headers: {
       'X-AUTH-USER': get(username),

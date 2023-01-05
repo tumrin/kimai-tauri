@@ -17,6 +17,7 @@
   import RecentTimers from '$lib/components/RecentTimers.svelte'
   import { errorStore } from '$lib/stores/error'
   import { DateTime } from 'luxon'
+  import LoadingIcon from '$lib/components/LoadingIcon.svelte'
 
   let loadingText = ''
 
@@ -56,7 +57,9 @@
 
 <div>
   {#if loadingText}
-    <h2>{loadingText}</h2>
+    <div class="loading-screen">
+      <LoadingIcon text={loadingText} />
+    </div>
   {:else if $apiKey && $apiUrl}
     {#if $timerStartedStore}
       <Timer startTime={$timesheetStore.begin || $timesheetEntityStore.begin || DateTime.now()} />
@@ -66,3 +69,10 @@
     {/if}
   {/if}
 </div>
+
+<style lang="scss">
+  .loading-screen {
+    display: flex;
+    justify-content: center;
+  }
+</style>

@@ -5,6 +5,7 @@
   import { stopTimer } from '$lib/apiFetchers/timesheets'
   import type { InitialTimerInfo, TimesheetCollectionExpanded, TimesheetEntity } from '$lib/types'
   import { errorStore } from '$lib/stores/error'
+  import { pendingRequestStore } from '$lib/stores/user'
   export let startTime: any
 
   let duration: Duration
@@ -24,6 +25,7 @@
         $errorStore = error
         $timerStartedStore = true
       })
+      .finally(() => pendingRequestStore.set(null))
     $timerStartedStore = false
   }
 </script>
@@ -41,3 +43,9 @@
   <h2>{duration?.toFormat('hh:mm:ss') ?? Duration.fromMillis(0).toFormat('hh:mm:ss')}</h2>
   <button on:click={handleStop}>Stop</button>
 </div>
+
+<style lang="scss">
+  .timer {
+    justify-content: flex-end;
+  }
+</style>

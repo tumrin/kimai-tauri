@@ -2,7 +2,7 @@
   import type { ActivityCollection, ProjectCollection } from '$lib/types'
   import { allActivitiesStore, allCustomersStore, allProjectsStore } from '$lib/stores/customers'
   import { initialInfoStore, timerStartedStore, timesheetEntityStore } from '$lib/stores/timesheet'
-  import { notificationPermissionStore, pendingRequestStore, userStore } from '$lib/stores/user'
+  import { ApiRequests, notificationPermissionStore, pendingRequestStore, userStore } from '$lib/stores/user'
   import { goto } from '$app/navigation'
   import { createTimesheet } from '$lib/apiFetchers/timesheets'
   import { sendNotification } from '@tauri-apps/api/notification'
@@ -29,7 +29,7 @@
         }
       })
       .catch((error) => errorStore.set(error))
-      .finally(() => pendingRequestStore.set([]))
+      .finally(() => pendingRequestStore.set($pendingRequestStore.filter((request) => request !== ApiRequests.CreateTimer)))
     $timerStartedStore = true
   }
 </script>

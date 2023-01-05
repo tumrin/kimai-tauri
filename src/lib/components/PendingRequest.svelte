@@ -15,7 +15,7 @@
     <button on:click={() => (displayRequest = displayRequest - 1 >= 1 ? displayRequest - 1 : $pendingRequestStore.length)}>{'<'}</button>
     <LoadingIcon text={$pendingRequestStore[displayRequest - 1]} />
     <button on:click={() => (displayRequest = displayRequest + 1 <= $pendingRequestStore.length ? displayRequest + 1 : 1)}>{'>'}</button>
-  {:else}{/if}
+  {/if}
 </div>
 
 <style lang="scss">

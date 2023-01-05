@@ -5,7 +5,7 @@
   import { stopTimer } from '$lib/apiFetchers/timesheets'
   import type { InitialTimerInfo, TimesheetCollectionExpanded, TimesheetEntity } from '$lib/types'
   import { errorStore } from '$lib/stores/error'
-  import { pendingRequestStore } from '$lib/stores/user'
+  import { ApiRequests, pendingRequestStore } from '$lib/stores/user'
   export let startTime: any
 
   let duration: Duration
@@ -25,7 +25,7 @@
         $errorStore = error
         $timerStartedStore = true
       })
-      .finally(() => pendingRequestStore.set([]))
+      .finally(() => pendingRequestStore.set($pendingRequestStore.filter((request) => request !== ApiRequests.StopTimer)))
     $timerStartedStore = false
   }
 </script>

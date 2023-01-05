@@ -2,7 +2,7 @@
   import { restartTimer } from '$lib/apiFetchers/timesheets'
   import { errorStore } from '$lib/stores/error'
   import { initialInfoStore, recentTimesheetStore, timerStartedStore, timesheetEntityStore } from '$lib/stores/timesheet'
-  import { pendingRequestStore } from '$lib/stores/user'
+  import { ApiRequests, pendingRequestStore } from '$lib/stores/user'
   import type { InitialTimerInfo } from '$lib/types'
 
   const handleRestart = (id?: number) => {
@@ -14,7 +14,7 @@
           $timesheetEntityStore = timer
         })
         .catch((error) => errorStore.set(error))
-        .finally(() => pendingRequestStore.set([]))
+        .finally(() => pendingRequestStore.set($pendingRequestStore.filter((request) => request !== ApiRequests.RestartTimer)))
       $timerStartedStore = true
     }
   }

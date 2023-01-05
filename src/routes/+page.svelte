@@ -2,7 +2,7 @@
   import { invoke } from '@tauri-apps/api/tauri'
   import { onMount } from 'svelte'
   import { apiKey, username, apiUrl } from '$lib/stores/apiKey'
-  import { notificationPermissionStore, userStore } from '$lib/stores/user'
+  import { notificationPermissionStore, pendingRequestStore, userStore } from '$lib/stores/user'
   import { recentTimesheetStore, timerStartedStore, timesheetEntityStore, timesheetStore } from '$lib/stores/timesheet'
   import { goto } from '$app/navigation'
   import { fetchActiveTimers, fetchRecentTimers } from '../lib/apiFetchers/timesheets'
@@ -17,9 +17,6 @@
   import RecentTimers from '$lib/components/RecentTimers.svelte'
   import { errorStore } from '$lib/stores/error'
   import { DateTime } from 'luxon'
-  import LoadingIcon from '$lib/components/LoadingIcon.svelte'
-
-  let loadingText = ''
 
   onMount(async () => {
     $notificationPermissionStore = await isPermissionGranted()
@@ -36,31 +33,22 @@
     }
     // If timer has not started and we are missing some infromation from Kimai, update all stores
     else if (!$timerStartedStore && (!$userStore || !$allCustomersStore || !$allProjectsStore || !$allActivitiesStore || !$recentTimesheetStore)) {
-      loadingText = 'Fetching data'
-      let ongoingTimers = []
-      ;[$userStore, $allCustomersStore, $allProjectsStore, $allActivitiesStore, $recentTimesheetStore, ongoingTimers] = await Promise.all([
-        fetchCurrentUser(),
-        fetchCustomers(),
-        fetchProjects(),
-        fetchActivities(),
-        fetchRecentTimers(),
-        fetchActiveTimers(),
-      ])
-      if (ongoingTimers.length > 0) {
-        $timerStartedStore = true
-        $timesheetStore = ongoingTimers[0]
-      }
-      loadingText = ''
+      Promise.all([fetchCurrentUser(), fetchCustomers(), fetchProjects(), fetchActivities(), fetchRecentTimers(), fetchActiveTimers()])
+        .then((data) => {
+          let ongoingTimers = []
+          ;[$userStore, $allCustomersStore, $allProjectsStore, $allActivitiesStore, $recentTimesheetStore, ongoingTimers] = data
+          if (ongoingTimers.length > 0) {
+            $timerStartedStore = true
+            $timesheetStore = ongoingTimers[0]
+          }
+        })
+        .finally(() => pendingRequestStore.set([]))
     }
   })
 </script>
 
 <div>
-  {#if loadingText}
-    <div class="loading-screen">
-      <LoadingIcon text={loadingText} />
-    </div>
-  {:else if $apiKey && $apiUrl}
+  {#if $apiKey && $apiUrl}
     {#if $timerStartedStore}
       <Timer startTime={$timesheetStore.begin || $timesheetEntityStore.begin || DateTime.now()} />
     {:else}

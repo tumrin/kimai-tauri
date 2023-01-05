@@ -3,7 +3,7 @@ import { writable, type Writable } from 'svelte/store'
 
 export let userStore: Writable<UserEntity | null> = writable(null)
 export let notificationPermissionStore = writable(false)
-export let pendingRequestStore: Writable<ApiRequests | null> = writable(null)
+export let pendingRequestStore: Writable<ApiRequests[]> = writable([])
 
 export enum ApiRequests {
   FetchActivities = 'Fetching activities',

@@ -3,7 +3,7 @@
 </script>
 
 <div class="loading">
-  <h2>{text}</h2>
+  <p>{text}</p>
   <div class="progress-bar">
     <div class="circle border" />
   </div>
@@ -12,9 +12,14 @@
 <style lang="scss">
   .loading {
     display: flex;
+    align-items: center;
+    p {
+      margin: 0 0 0 0.5rem;
+    }
   }
   .progress-bar {
     display: flex;
+    flex-direction: row;
     align-items: center;
     margin: 0.5rem;
     .circle {

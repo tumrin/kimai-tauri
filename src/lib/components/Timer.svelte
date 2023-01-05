@@ -25,7 +25,7 @@
         $errorStore = error
         $timerStartedStore = true
       })
-      .finally(() => pendingRequestStore.set(null))
+      .finally(() => pendingRequestStore.set([]))
     $timerStartedStore = false
   }
 </script>

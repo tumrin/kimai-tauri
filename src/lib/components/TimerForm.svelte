@@ -29,7 +29,7 @@
         }
       })
       .catch((error) => errorStore.set(error))
-      .finally(() => pendingRequestStore.set(null))
+      .finally(() => pendingRequestStore.set([]))
     $timerStartedStore = true
   }
 </script>

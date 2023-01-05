@@ -1,6 +1,23 @@
 <script lang="ts">
-  import { recentTimesheetStore } from '$lib/stores/timesheet'
-  export let handleRestart: any
+  import { restartTimer } from '$lib/apiFetchers/timesheets'
+  import { errorStore } from '$lib/stores/error'
+  import { initialInfoStore, recentTimesheetStore, timerStartedStore, timesheetEntityStore } from '$lib/stores/timesheet'
+  import { ApiRequests, pendingRequestStore } from '$lib/stores/user'
+  import type { InitialTimerInfo } from '$lib/types'
+
+  const handleRestart = (id?: number) => {
+    if (id) {
+      let recent = $recentTimesheetStore.find((timesheet) => timesheet.id === id)
+      $initialInfoStore = ({ project: recent?.project.id, activity: recent?.activity.id, description: recent?.description } || {}) as InitialTimerInfo
+      restartTimer(id)
+        .then((timer) => {
+          $timesheetEntityStore = timer
+        })
+        .catch((error) => errorStore.set(error))
+        .finally(() => pendingRequestStore.set($pendingRequestStore.filter((request) => request !== ApiRequests.RestartTimer)))
+      $timerStartedStore = true
+    }
+  }
 </script>
 
 <div class="recent-timesheet-container">

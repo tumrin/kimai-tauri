@@ -197,3 +197,9 @@ export interface ProjectExpanded {
   globalActivites: boolean
   color?: string
 }
+
+export interface InitialTimerInfo {
+  project: number
+  activity: number
+  description: string
+}

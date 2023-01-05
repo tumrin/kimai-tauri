@@ -1,4 +1,18 @@
 import type { UserEntity } from '$lib/types'
-import { writable } from 'svelte/store'
+import { writable, type Writable } from 'svelte/store'
 
-export let userStore = writable({} as UserEntity)
+export let userStore: Writable<UserEntity | null> = writable(null)
+export let notificationPermissionStore = writable(false)
+export let pendingRequestStore: Writable<ApiRequests[]> = writable([])
+
+export enum ApiRequests {
+  FetchActivities = 'Fetching activities',
+  FetchCustomers = 'Fetching Customers',
+  FetchProjects = 'Fetching projects',
+  CreateTimer = 'Creating timer',
+  StopTimer = 'Stopping timer',
+  RestartTimer = 'Restarting timer',
+  FetchActiveTimer = 'Fetching active timers',
+  FetchRecentTimers = 'Fetching recent timers',
+  FetchCurrentUser = 'Fetching current user info',
+}

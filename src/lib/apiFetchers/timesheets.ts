@@ -1,8 +1,10 @@
 import { apiKey, apiUrl, username } from '$lib/stores/apiKey'
+import { ApiRequests, pendingRequestStore } from '$lib/stores/user'
 import type { TimesheetCollectionExpanded, TimesheetEditForm } from '$lib/types'
 import { get } from 'svelte/store'
 
 export const createTimesheet = async (project: number, activity: number, description: string, user: number) => {
+  pendingRequestStore.set(get(pendingRequestStore)?.concat(ApiRequests.CreateTimer) || [])
   let body: TimesheetEditForm = {
     project,
     activity,
@@ -18,11 +20,12 @@ export const createTimesheet = async (project: number, activity: number, descrip
     method: 'POST',
     body: JSON.stringify(body),
   })
-  return await response.json();
+  return await response.json()
 }
 
 export const stopTimer = async (id?: number) => {
-  await fetch(`${get(apiUrl)}/timesheets/${id}/stop`, {
+  pendingRequestStore.set(get(pendingRequestStore)?.concat(ApiRequests.StopTimer) || [])
+  let response = await fetch(`${get(apiUrl)}/timesheets/${id}/stop`, {
     headers: {
       'X-AUTH-USER': get(username),
       'X-AUTH-TOKEN': get(apiKey),
@@ -31,9 +34,13 @@ export const stopTimer = async (id?: number) => {
     method: 'PATCH',
     body: JSON.stringify({ id }),
   })
+  if (!response.ok) {
+    throw Error('Could not stop timer')
+  }
 }
 
 export const restartTimer = async (id?: number) => {
+  pendingRequestStore.set(get(pendingRequestStore)?.concat(ApiRequests.RestartTimer) || [])
   let response = await fetch(`${get(apiUrl)}/timesheets/${id}/restart`, {
     headers: {
       'X-AUTH-USER': get(username),
@@ -41,12 +48,13 @@ export const restartTimer = async (id?: number) => {
       'Content-Type': 'application/json',
     },
     method: 'PATCH',
-    body: JSON.stringify({ id, copy: "description" }),
+    body: JSON.stringify({ id, copy: 'description' }),
   })
-  return await response.json();
+  return await response.json()
 }
 
 export const fetchActiveTimers = async (): Promise<TimesheetCollectionExpanded[]> => {
+  pendingRequestStore.set(get(pendingRequestStore)?.concat(ApiRequests.FetchActiveTimer) || [])
   let response = await fetch(`${get(apiUrl)}/timesheets/active`, {
     headers: {
       'X-AUTH-USER': get(username),
@@ -58,6 +66,7 @@ export const fetchActiveTimers = async (): Promise<TimesheetCollectionExpanded[]
 }
 
 export const fetchRecentTimers = async (): Promise<TimesheetCollectionExpanded[]> => {
+  pendingRequestStore.set(get(pendingRequestStore)?.concat(ApiRequests.FetchRecentTimers) || [])
   let response = await fetch(`${get(apiUrl)}/timesheets/recent`, {
     headers: {
       'X-AUTH-USER': get(username),

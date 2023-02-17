@@ -1,13 +1,11 @@
-name: 'test-on-pr'
+name: "test-on-pr"
 on: [pull_request]
-
 jobs:
   test-tauri:
     strategy:
       fail-fast: false
       matrix:
         platform: [macos-latest, ubuntu-20.04, windows-latest]
-
     runs-on: ${{ matrix.platform }}
     steps:
       - uses: actions/checkout@v3

@@ -62,7 +62,12 @@
       "csp": null
     },
     "updater": {
-      "active": false
+      "active": true,
+      "dialog": true,
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEMwRjcwRjMwRUU1NTQyMTIKUldRU1FsWHVNQS8zd084NnY5TGg5cGd6aFhTYmdEM2hHa05GRDg3c05zWWFRcHhOckFXU2tpVWEK",
+      "endpoints": [
+        "https://gist.githubusercontent.com/tumrin/a9ae981c0a89497f30ff7288318ceab3/raw/a192de8f0da03ce80a37ee60df5785e22ed41428/kimai-tauri-update.json"
+      ]
     },
     "windows": [
       {

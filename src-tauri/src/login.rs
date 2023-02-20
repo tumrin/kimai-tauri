@@ -22,7 +22,8 @@ pub async fn login(
     fs::write(&app_state.settings_dir, toml)
         .map_err(|err| tauri::InvokeError::from(err.to_string()))?;
 
-    let password_entry = keyring::Entry::new(CRATE_NAME, settings.kimai_user.as_ref().unwrap()); // Safe to unwrap since we just made this
+    let password_entry = keyring::Entry::new(CRATE_NAME, settings.kimai_user.as_ref().unwrap()) // Safe to unwrap since we just made this
+        .map_err(|err| tauri::InvokeError::from(err.to_string()))?;
     password_entry
         .set_password(&api_key)
         .map_err(|err| tauri::InvokeError::from(err.to_string()))?;
@@ -31,16 +32,21 @@ pub async fn login(
 
     Ok(())
 }
-// TODO: Add error handling to logout function
+
 #[tauri::command]
 pub async fn logout(state: tauri::State<'_, ApplicationState>) -> Result<(), tauri::InvokeError> {
     let mut app_state = state.0.lock().await;
-    let settings = app_state.settings.as_ref().unwrap();
+    let settings = app_state
+        .settings
+        .as_ref()
+        .ok_or(tauri::InvokeError::from("Could not find settings"))?;
 
     // Remove settings
-    fs::remove_file(&app_state.settings_dir).unwrap();
+    fs::remove_file(&app_state.settings_dir)
+        .map_err(|err| tauri::InvokeError::from(err.to_string()))?;
 
-    let password_entry = keyring::Entry::new(CRATE_NAME, &settings.kimai_user.clone().unwrap());
+    let password_entry = keyring::Entry::new(CRATE_NAME, &settings.kimai_user.clone().unwrap())
+        .map_err(|err| tauri::InvokeError::from(err.to_string()))?;
     password_entry
         .delete_password()
         .map_err(|err| tauri::InvokeError::from(err.to_string()))?;
@@ -66,7 +72,8 @@ pub async fn get_api_key(
     let api_url = settings
         .api_url
         .ok_or_else(|| tauri::InvokeError::from("No API url in settings"))?;
-    let password_entry = keyring::Entry::new(CRATE_NAME, &kimai_user);
+    let password_entry = keyring::Entry::new(CRATE_NAME, &kimai_user)
+        .map_err(|err| tauri::InvokeError::from(err.to_string()))?;
     let api_key = password_entry
         .get_password()
         .map_err(|err| tauri::InvokeError::from(err.to_string()))?;

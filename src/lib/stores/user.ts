@@ -6,13 +6,13 @@ export let notificationPermissionStore = writable(false)
 export let pendingRequestStore: Writable<ApiRequests[]> = writable([])
 
 export enum ApiRequests {
-  FetchActivities = 'Fetching activities',
-  FetchCustomers = 'Fetching Customers',
-  FetchProjects = 'Fetching projects',
-  CreateTimer = 'Creating timer',
-  StopTimer = 'Stopping timer',
-  RestartTimer = 'Restarting timer',
-  FetchActiveTimer = 'Fetching active timers',
-  FetchRecentTimers = 'Fetching recent timers',
-  FetchCurrentUser = 'Fetching current user info',
+    FetchActivities = 'Fetching activities',
+    FetchCustomers = 'Fetching Customers',
+    FetchProjects = 'Fetching projects',
+    CreateTimer = 'Creating timer',
+    StopTimer = 'Stopping timer',
+    RestartTimer = 'Restarting timer',
+    FetchActiveTimer = 'Fetching active timers',
+    FetchRecentTimers = 'Fetching recent timers',
+    FetchCurrentUser = 'Fetching current user info',
 }

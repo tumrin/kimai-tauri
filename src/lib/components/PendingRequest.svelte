@@ -21,7 +21,6 @@
 <style lang="scss">
     .pending {
         display: flex;
-        align-self: flex-end;
         max-height: 4rem;
         overflow-y: scroll;
         button {

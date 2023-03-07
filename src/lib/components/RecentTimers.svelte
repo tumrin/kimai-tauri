@@ -25,6 +25,9 @@
 </script>
 
 <div class="recent-timesheet-container">
+    {#if $recentTimesheetStore.length > 0}
+        <h1>Recent timers</h1>
+    {/if}
     {#each $recentTimesheetStore as timesheet}
         <div class="recent-timesheet">
             <h3>{timesheet.project.name || ''}</h3>

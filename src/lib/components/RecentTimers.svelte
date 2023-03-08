@@ -4,6 +4,7 @@
     import { initialInfoStore, recentTimesheetStore, timerStartedStore, timesheetEntityStore } from '$lib/stores/timesheet'
     import { ApiRequests, pendingRequestStore } from '$lib/stores/user'
     import type { InitialTimerInfo } from '$lib/types'
+    import { fly } from 'svelte/transition'
 
     const handleRestart = (id?: number) => {
         if (id) {
@@ -24,19 +25,19 @@
     }
 </script>
 
-<div class="recent-timesheet-container">
-    {#if $recentTimesheetStore.length > 0}
+{#if $recentTimesheetStore.length > 0}
+    <div class="recent-timesheet-container" in:fly={{ y: 100, duration: 500 }}>
         <h1>Recent timers</h1>
-    {/if}
-    {#each $recentTimesheetStore as timesheet}
-        <div class="recent-timesheet">
-            <h3>{timesheet.project.name || ''}</h3>
-            <h4>{timesheet.activity.name || ''}</h4>
-            <p>{timesheet.description || ''}</p>
-            <button on:click={() => handleRestart(timesheet.id)}>Restart</button>
-        </div>
-    {/each}
-</div>
+        {#each $recentTimesheetStore as timesheet}
+            <div class="recent-timesheet">
+                <h3>{timesheet.project.name || ''}</h3>
+                <h4>{timesheet.activity.name || ''}</h4>
+                <p>{timesheet.description || ''}</p>
+                <button on:click={() => handleRestart(timesheet.id)}>Restart</button>
+            </div>
+        {/each}
+    </div>
+{/if}
 
 <style lang="scss">
     .recent-timesheet-container {

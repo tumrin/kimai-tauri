@@ -1,7 +1,7 @@
 {
     "name": "kimai-tauri",
     "private": true,
-    "version": "0.4.1",
+    "version": "0.5.0",
     "type": "module",
     "scripts": {
         "dev": "vite dev",
@@ -13,8 +13,10 @@
         "format": "prettier --write --plugin-search-dir=. --config ./.prettierrc.yml src/"
     },
     "dependencies": {
+        "@fortawesome/free-solid-svg-icons": "^6.3.0",
         "@tauri-apps/api": "^1.2.0",
-        "luxon": "^3.1.1"
+        "luxon": "^3.1.1",
+        "svelte-fa": "^3.0.3"
     },
     "devDependencies": {
         "@sveltejs/adapter-static": "^1.0.0",

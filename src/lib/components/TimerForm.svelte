@@ -7,6 +7,8 @@
     import { createTimesheet } from '$lib/apiFetchers/timesheets'
     import { sendNotification } from '@tauri-apps/api/notification'
     import { errorStore } from '$lib/stores/error'
+    import Fa from 'svelte-fa'
+    import { faPlay } from '@fortawesome/free-solid-svg-icons'
 
     let customersProjects: ProjectCollection[] = []
     let customersActivities: ActivityCollection[] = []
@@ -16,11 +18,13 @@
     let description: any
 
     const handleSubmit = (project: number, activity: number, description: string) => {
-        initialInfoStore.set({ project, activity, description })
         if (!$userStore) {
             goto('/login')
             return
         }
+
+        initialInfoStore.set({ project, activity, description })
+
         createTimesheet(project, activity, description, $userStore.id)
             .then((timesheet) => {
                 $timesheetEntityStore = timesheet
@@ -30,6 +34,7 @@
             })
             .catch((error) => errorStore.set(error))
             .finally(() => pendingRequestStore.set($pendingRequestStore.filter((request) => request !== ApiRequests.CreateTimer)))
+
         $timerStartedStore = true
     }
 </script>
@@ -73,6 +78,18 @@
 
         <label>Description</label>
         <textarea bind:value={description} />
-        <button type="submit">Start</button>
+        <button type="submit"
+            >Start
+            <Fa icon={faPlay} /></button
+        >
     </form>
 </div>
+
+<style lang="scss">
+    button {
+        background-color: var(--timer-bt-color);
+        &:hover {
+            background-color: var(--timer-hover-bt-color);
+        }
+    }
+</style>

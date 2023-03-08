@@ -1,82 +1,74 @@
 {
-  "build": {
-    "beforeDevCommand": "npm run dev",
-    "beforeBuildCommand": "npm run build",
-    "devPath": "http://localhost:1420",
-    "distDir": "../build",
-    "withGlobalTauri": false
-  },
-  "package": {
-    "productName": "kimai-tauri",
-    "version": "0.4.1"
-  },
-  "tauri": {
-    "allowlist": {
-      "all": false,
-      "notification": {
-        "all": true
-      },
-      "shell": {
-        "all": false,
-        "open": true
-      }
+    "build": {
+        "beforeDevCommand": "npm run dev",
+        "beforeBuildCommand": "npm run build",
+        "devPath": "http://localhost:1420",
+        "distDir": "../build",
+        "withGlobalTauri": false
     },
-    "systemTray": {
-      "iconPath": "icons/icon.png",
-      "iconAsTemplate": true
+    "package": {
+        "productName": "kimai-tauri",
+        "version": "0.5.0"
     },
-    "bundle": {
-      "active": true,
-      "category": "DeveloperTool",
-      "copyright": "",
-      "deb": {
-        "depends": []
-      },
-      "externalBin": [],
-      "icon": [
-        "icons/32x32.png",
-        "icons/128x128.png",
-        "icons/128x128@2x.png",
-        "icons/icon.icns",
-        "icons/icon.ico"
-      ],
-      "identifier": "com.kimai-tauri.dev",
-      "longDescription": "",
-      "macOS": {
-        "entitlements": null,
-        "exceptionDomain": "",
-        "frameworks": [],
-        "providerShortName": null,
-        "signingIdentity": null
-      },
-      "resources": [],
-      "shortDescription": "",
-      "targets": "all",
-      "windows": {
-        "certificateThumbprint": null,
-        "digestAlgorithm": "sha256",
-        "timestampUrl": ""
-      }
-    },
-    "security": {
-      "csp": null
-    },
-    "updater": {
-      "active": true,
-      "dialog": true,
-      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEMwRjcwRjMwRUU1NTQyMTIKUldRU1FsWHVNQS8zd084NnY5TGg5cGd6aFhTYmdEM2hHa05GRDg3c05zWWFRcHhOckFXU2tpVWEK",
-      "endpoints": [
-        "https://gist.githubusercontent.com/tumrin/a9ae981c0a89497f30ff7288318ceab3/raw"
-      ]
-    },
-    "windows": [
-      {
-        "fullscreen": false,
-        "height": 600,
-        "resizable": true,
-        "title": "kimai-tauri",
-        "width": 800
-      }
-    ]
-  }
+    "tauri": {
+        "allowlist": {
+            "all": false,
+            "notification": {
+                "all": true
+            },
+            "shell": {
+                "all": false,
+                "open": true
+            }
+        },
+        "systemTray": {
+            "iconPath": "icons/icon.png",
+            "iconAsTemplate": true
+        },
+        "bundle": {
+            "active": true,
+            "category": "DeveloperTool",
+            "copyright": "",
+            "deb": {
+                "depends": []
+            },
+            "externalBin": [],
+            "icon": ["icons/32x32.png", "icons/128x128.png", "icons/128x128@2x.png", "icons/icon.icns", "icons/icon.ico"],
+            "identifier": "com.kimai-tauri.dev",
+            "longDescription": "",
+            "macOS": {
+                "entitlements": null,
+                "exceptionDomain": "",
+                "frameworks": [],
+                "providerShortName": null,
+                "signingIdentity": null
+            },
+            "resources": [],
+            "shortDescription": "",
+            "targets": "all",
+            "windows": {
+                "certificateThumbprint": null,
+                "digestAlgorithm": "sha256",
+                "timestampUrl": ""
+            }
+        },
+        "security": {
+            "csp": null
+        },
+        "updater": {
+            "active": true,
+            "dialog": true,
+            "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEMwRjcwRjMwRUU1NTQyMTIKUldRU1FsWHVNQS8zd084NnY5TGg5cGd6aFhTYmdEM2hHa05GRDg3c05zWWFRcHhOckFXU2tpVWEK",
+            "endpoints": ["https://gist.githubusercontent.com/tumrin/a9ae981c0a89497f30ff7288318ceab3/raw"]
+        },
+        "windows": [
+            {
+                "fullscreen": false,
+                "height": 600,
+                "resizable": true,
+                "title": "kimai-tauri",
+                "width": 800
+            }
+        ]
+    }
 }

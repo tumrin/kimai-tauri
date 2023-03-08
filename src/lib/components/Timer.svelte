@@ -6,6 +6,8 @@
     import type { InitialTimerInfo, TimesheetCollectionExpanded, TimesheetEntity } from '$lib/types'
     import { errorStore } from '$lib/stores/error'
     import { ApiRequests, pendingRequestStore } from '$lib/stores/user'
+    import Fa from 'svelte-fa'
+    import { faStop } from '@fortawesome/free-solid-svg-icons'
     export let startTime: any
 
     let duration: Duration
@@ -41,11 +43,21 @@
     </h2>
     <h3>{$timesheetStore.description || $timesheetEntityStore.description || $initialInfoStore.description}</h3>
     <h2>{duration?.toFormat('hh:mm:ss') ?? Duration.fromMillis(0).toFormat('hh:mm:ss')}</h2>
-    <button on:click={handleStop}>Stop</button>
+    <button on:click={handleStop}
+        >Stop
+        <Fa icon={faStop} />
+    </button>
 </div>
 
 <style lang="scss">
     .timer {
         justify-content: flex-end;
+
+        button {
+            background-color: var(--timer-bt-color);
+            &:hover {
+                background-color: var(--timer-hover-bt-color);
+            }
+        }
     }
 </style>

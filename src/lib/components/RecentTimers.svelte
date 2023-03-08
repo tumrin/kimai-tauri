@@ -4,6 +4,8 @@
     import { initialInfoStore, recentTimesheetStore, timerStartedStore, timesheetEntityStore } from '$lib/stores/timesheet'
     import { ApiRequests, pendingRequestStore } from '$lib/stores/user'
     import type { InitialTimerInfo } from '$lib/types'
+    import { faUndo } from '@fortawesome/free-solid-svg-icons'
+    import Fa from 'svelte-fa'
     import { fly } from 'svelte/transition'
 
     const handleRestart = (id?: number) => {
@@ -33,7 +35,7 @@
                 <h3>{timesheet.project.name || ''}</h3>
                 <h4>{timesheet.activity.name || ''}</h4>
                 <p>{timesheet.description || ''}</p>
-                <button on:click={() => handleRestart(timesheet.id)}>Restart</button>
+                <button on:click={() => handleRestart(timesheet.id)}><Fa icon={faUndo} size="2x" /></button>
             </div>
         {/each}
     </div>
@@ -46,7 +48,7 @@
     }
     .recent-timesheet {
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr 0.25fr;
         border-style: solid;
         text-align: center;
         border-radius: 8px;

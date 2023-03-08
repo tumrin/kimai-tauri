@@ -15,6 +15,8 @@
     --main-hover-bt-color: #1d60b0;
     --timer-bt-color: #2aa13d;
     --timer-hover-bt-color: #298941;
+    --timer-stop-bt-color: #da4c4c;
+    --timer-hover-stop-bt-color: #d63939;
     --main-txt-color: #f6f6f6;
 
     background-color: var(--main-bg-color);

@@ -27,7 +27,6 @@
     .pending {
         display: flex;
         max-height: 4rem;
-        overflow-y: scroll;
         button {
             align-self: center;
             padding: 0.5rem;

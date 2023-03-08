@@ -54,9 +54,9 @@
         justify-content: flex-end;
 
         button {
-            background-color: var(--timer-bt-color);
+            background-color: var(--timer-stop-bt-color);
             &:hover {
-                background-color: var(--timer-hover-bt-color);
+                background-color: var(--timer-hover-stop-bt-color);
             }
         }
     }

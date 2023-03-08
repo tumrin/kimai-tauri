@@ -2,6 +2,8 @@
     import { pendingRequestStore } from '$lib/stores/user'
     import { beforeUpdate } from 'svelte'
     import LoadingIcon from './LoadingIcon.svelte'
+    import Fa from 'svelte-fa'
+    import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons'
 
     let displayRequest = 1
     beforeUpdate(() => {
@@ -12,22 +14,22 @@
 <div class="pending">
     {#if $pendingRequestStore.length > 0}
         <h2>{`${displayRequest}/${$pendingRequestStore.length}`}</h2>
-        <button on:click={() => (displayRequest = displayRequest - 1 >= 1 ? displayRequest - 1 : $pendingRequestStore.length)}>{'<'}</button>
+        <button on:click={() => (displayRequest = displayRequest - 1 >= 1 ? displayRequest - 1 : $pendingRequestStore.length)}><Fa icon={faArrowLeft} /></button
+        >
         <LoadingIcon text={$pendingRequestStore[displayRequest - 1]} />
-        <button on:click={() => (displayRequest = displayRequest + 1 <= $pendingRequestStore.length ? displayRequest + 1 : 1)}>{'>'}</button>
+        <button on:click={() => (displayRequest = displayRequest + 1 <= $pendingRequestStore.length ? displayRequest + 1 : 1)}
+            ><Fa icon={faArrowRight} /></button
+        >
     {/if}
 </div>
 
 <style lang="scss">
     .pending {
         display: flex;
-        align-self: flex-end;
         max-height: 4rem;
-        overflow-y: scroll;
         button {
-            padding: 0.25rem;
-            height: 50%;
             align-self: center;
+            padding: 0.5rem;
         }
     }
 </style>

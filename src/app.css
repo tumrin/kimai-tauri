@@ -4,14 +4,23 @@
     line-height: 24px;
     font-weight: 400;
 
-    color: #f6f6f6;
-    background-color: #2f2f2f;
-
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-text-size-adjust: 100%;
+
+    --main-bg-color: #1d273b;
+    --main-bt-color: #206bc4;
+    --main-hover-bt-color: #1d60b0;
+    --timer-bt-color: #2aa13d;
+    --timer-hover-bt-color: #298941;
+    --timer-stop-bt-color: #da4c4c;
+    --timer-hover-stop-bt-color: #d63939;
+    --main-txt-color: #f6f6f6;
+
+    background-color: var(--main-bg-color);
+    color: var(--main-txt-color);
 }
 
 form {
@@ -52,9 +61,8 @@ button {
     font-size: 1em;
     font-weight: 500;
     font-family: inherit;
-    color: #ffffff;
-    background-color: #0f0f0f98;
-    transition: border-color 0.25s;
+    color: var(--main-txt-color);
+    background-color: var(--main-bt-color);
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
     outline: none;
 }
@@ -64,5 +72,5 @@ button {
 }
 
 button:hover {
-    border-color: #396cd8;
+    background-color: var(--main-hover-bt-color);
 }

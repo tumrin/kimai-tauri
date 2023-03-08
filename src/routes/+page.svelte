@@ -57,10 +57,3 @@
         {/if}
     {/if}
 </div>
-
-<style lang="scss">
-    .loading-screen {
-        display: flex;
-        justify-content: center;
-    }
-</style>

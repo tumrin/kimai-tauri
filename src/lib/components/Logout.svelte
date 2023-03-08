@@ -34,5 +34,6 @@
 <style lang="scss">
     .logout {
         align-self: center;
+        justify-self: start;
     }
 </style>

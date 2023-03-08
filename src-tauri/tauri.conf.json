@@ -22,7 +22,7 @@
             }
         },
         "systemTray": {
-            "iconPath": "icons/icon.png",
+            "iconPath": "icons/kimai.png",
             "iconAsTemplate": true
         },
         "bundle": {

@@ -10,6 +10,7 @@
     import Fa from 'svelte-fa'
     import { faPlay } from '@fortawesome/free-solid-svg-icons'
     import Select from 'svelte-select'
+    import Input from './Input.svelte'
 
     interface SelectorItem {
         label: string
@@ -79,7 +80,7 @@
         />
 
         <label>Description</label>
-        <input type="text" bind:value={description} />
+        <Input type="text" bind:value={description} />
 
         <button type="submit"
             >Start
@@ -97,13 +98,6 @@
         --selected-item-color: black;
         --item-is-active-bg: var(--main-bt-color);
         --border-focused: var(main-bt-color);
-        input {
-            background-color: white;
-            color: black;
-            &:focus {
-                box-shadow: 0 0 0 1px var(--main-bt-color);
-            }
-        }
     }
     button {
         background-color: var(--timer-bt-color);

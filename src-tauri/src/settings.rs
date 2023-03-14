@@ -8,8 +8,9 @@ pub struct Settings {
 }
 
 pub fn load_settings(settings_dir: &PathBuf) -> Result<Settings, io::Error> {
-    let file = fs::read(settings_dir)?;
-    let toml_file = toml::from_slice::<toml::Value>(&file)?;
+    let file = fs::read_to_string(settings_dir)?;
+    let toml_file = toml::from_str::<toml::Value>(&file)
+        .map_err(|err| io::Error::new(io::ErrorKind::Other, err))?;
 
     Ok(Settings {
         kimai_user: toml_file

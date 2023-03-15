@@ -19,9 +19,9 @@
 
     let customersProjects: ProjectCollection[] = []
     let customersActivities: ActivityCollection[] = []
-    let project: SelectorItem
+    let project: SelectorItem | null
     let customer: SelectorItem | null = null // Needs to be null so no customer is chosen by default
-    let activity: SelectorItem
+    let activity: SelectorItem | null
     let description: string
 
     const handleSubmit = (project: number, activity: number, description: string) => {
@@ -47,12 +47,27 @@
 </script>
 
 <div class="timeform selector">
-    <form on:submit={() => handleSubmit(project.value, activity.value, description)}>
+    <form
+        on:submit={() => {
+            if (project && activity) {
+                handleSubmit(project.value, activity.value, description)
+            } else {
+                errorStore.set('Select project and activity')
+            }
+        }}
+    >
         <label>Customer</label>
         <Select
             bind:value={customer}
             on:change={async () => {
                 customersProjects = $allProjectsStore.filter((project) => project.customer === customer?.value)
+            }}
+            on:clear={() => {
+                customersProjects = []
+                customersActivities = []
+                customer = null
+                project = null
+                activity = null
             }}
             items={$allCustomersStore.map((customer) => {
                 return { label: customer.name, value: customer.id }
@@ -63,7 +78,11 @@
         <Select
             bind:value={project}
             on:change={async () => {
-                customersActivities = $allActivitiesStore.filter((activity) => !activity.project || activity.project === project.value)
+                customersActivities = $allActivitiesStore.filter((activity) => !activity.project || activity.project === project?.value)
+            }}
+            on:clear={() => {
+                customersActivities = []
+                activity = null
             }}
             name="Project"
             items={customersProjects.map((project) => {

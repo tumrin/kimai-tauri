@@ -24,6 +24,20 @@
     let activity: SelectorItem | null
     let description: string
 
+    const clearCustomer = () => {
+        customersProjects = []
+        customer = null
+        clearProject()
+    }
+    const clearProject = () => {
+        customersActivities = []
+        project = null
+        clearActivity()
+    }
+    const clearActivity = () => {
+        activity = null
+    }
+
     const handleSubmit = (project: number, activity: number, description: string) => {
         if (!$userStore) {
             goto('/login')
@@ -62,13 +76,7 @@
             on:change={async () => {
                 customersProjects = $allProjectsStore.filter((project) => project.customer === customer?.value)
             }}
-            on:clear={() => {
-                customersProjects = []
-                customersActivities = []
-                customer = null
-                project = null
-                activity = null
-            }}
+            on:clear={clearCustomer}
             items={$allCustomersStore.map((customer) => {
                 return { label: customer.name, value: customer.id }
             })}
@@ -80,10 +88,7 @@
             on:change={async () => {
                 customersActivities = $allActivitiesStore.filter((activity) => !activity.project || activity.project === project?.value)
             }}
-            on:clear={() => {
-                customersActivities = []
-                activity = null
-            }}
+            on:clear={clearProject}
             name="Project"
             items={customersProjects.map((project) => {
                 return { label: project.name, value: project.id }
@@ -93,6 +98,7 @@
         <label>Activites</label>
         <Select
             bind:value={activity}
+            on:clear={clearActivity}
             items={customersActivities.map((activity) => {
                 return { label: activity.name, value: activity.id }
             })}

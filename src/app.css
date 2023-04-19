@@ -27,24 +27,12 @@ form {
     display: flex;
     flex-direction: column;
 }
-select {
-    width: 100%;
-}
-
-.container {
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-}
 
 a {
     font-weight: 500;
     color: #646cff;
     text-decoration: inherit;
 }
-
 a:hover {
     color: #24c8db;
 }
@@ -53,7 +41,6 @@ h1 {
     text-align: center;
 }
 
-input,
 button {
     border-radius: 8px;
     border: 1px solid transparent;
@@ -70,7 +57,14 @@ button {
 button {
     cursor: pointer;
 }
-
 button:hover {
     background-color: var(--main-hover-bt-color);
+}
+
+.container {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
 }

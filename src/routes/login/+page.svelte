@@ -1,5 +1,6 @@
 <script lang="ts">
     import { goto } from '$app/navigation'
+    import Input from '$lib/components/Input.svelte'
     import { invoke } from '@tauri-apps/api/tauri'
 
     let apiKey = ''
@@ -18,11 +19,11 @@
 <div>
     <form on:submit={handleLogin}>
         <label>API url</label>
-        <input bind:value={apiUrl} type="text" />
+        <Input bind:value={apiUrl} type="text" />
         <label>Username</label>
-        <input bind:value={kimaiUsername} type="text" />
+        <Input bind:value={kimaiUsername} type="text" />
         <label>API key</label>
-        <input bind:value={apiKey} type="password" />
+        <Input bind:value={apiKey} type="password" />
         <button type="submit">Login</button>
     </form>
 </div>

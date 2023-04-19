@@ -1,29 +1,29 @@
 [package]
 name = "kimai-tauri"
-version = "0.5.0"
+version = "0.5.1"
 description = "A Tauri App"
 authors = ["Tuomas Rinne"]
 license = "MIT"
 repository = ""
 edition = "2021"
-rust-version = "1.57"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [profile.release]
 codegen-units = 1
 lto = true
+strip = true
 
 [build-dependencies]
 tauri-build = { version = "1.2", features = [] }
 
 [dependencies]
-serde_json = "1.0"
-serde = { version = "1.0", features = ["derive"] }
-tauri = { version = "1.2", features = ["notification-all", "shell-open", "system-tray", "updater"] }
+serde_json = { default-features = false, version = "1.0" }
+serde = { version = "1.0", default-features = false }
+tauri = { version = "1.2", features = ["base64", "compression", "notification-all", "shell-open", "system-tray", "updater", "wry"], default-features = false }
 keyring = "2.0.0"
-toml = "0.5.10"
-directories = "4.0.1"
+toml = "0.7.3"
+directories = "5.0.0"
 
 [features]
 # by default Tauri runs in production mode

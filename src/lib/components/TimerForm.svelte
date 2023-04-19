@@ -10,6 +10,7 @@
     import Fa from 'svelte-fa'
     import { faPlay } from '@fortawesome/free-solid-svg-icons'
     import Select from 'svelte-select'
+    import Input from './Input.svelte'
 
     interface SelectorItem {
         label: string
@@ -18,10 +19,24 @@
 
     let customersProjects: ProjectCollection[] = []
     let customersActivities: ActivityCollection[] = []
-    let project: SelectorItem
+    let project: SelectorItem | null
     let customer: SelectorItem | null = null // Needs to be null so no customer is chosen by default
-    let activity: SelectorItem
+    let activity: SelectorItem | null
     let description: string
+
+    const clearCustomer = () => {
+        customersProjects = []
+        customer = null
+        clearProject()
+    }
+    const clearProject = () => {
+        customersActivities = []
+        project = null
+        clearActivity()
+    }
+    const clearActivity = () => {
+        activity = null
+    }
 
     const handleSubmit = (project: number, activity: number, description: string) => {
         if (!$userStore) {
@@ -46,13 +61,22 @@
 </script>
 
 <div class="timeform selector">
-    <form on:submit={() => handleSubmit(project.value, activity.value, description)}>
+    <form
+        on:submit={() => {
+            if (project && activity) {
+                handleSubmit(project.value, activity.value, description)
+            } else {
+                errorStore.set('Select project and activity')
+            }
+        }}
+    >
         <label>Customer</label>
         <Select
             bind:value={customer}
             on:change={async () => {
                 customersProjects = $allProjectsStore.filter((project) => project.customer === customer?.value)
             }}
+            on:clear={clearCustomer}
             items={$allCustomersStore.map((customer) => {
                 return { label: customer.name, value: customer.id }
             })}
@@ -62,8 +86,9 @@
         <Select
             bind:value={project}
             on:change={async () => {
-                customersActivities = $allActivitiesStore.filter((activity) => !activity.project || activity.project === project.value)
+                customersActivities = $allActivitiesStore.filter((activity) => !activity.project || activity.project === project?.value)
             }}
+            on:clear={clearProject}
             name="Project"
             items={customersProjects.map((project) => {
                 return { label: project.name, value: project.id }
@@ -73,13 +98,14 @@
         <label>Activites</label>
         <Select
             bind:value={activity}
+            on:clear={clearActivity}
             items={customersActivities.map((activity) => {
                 return { label: activity.name, value: activity.id }
             })}
         />
 
         <label>Description</label>
-        <input type="text" bind:value={description} />
+        <Input type="text" bind:value={description} />
 
         <button type="submit"
             >Start
@@ -97,13 +123,6 @@
         --selected-item-color: black;
         --item-is-active-bg: var(--main-bt-color);
         --border-focused: var(main-bt-color);
-        input {
-            background-color: white;
-            color: black;
-            &:focus {
-                box-shadow: 0 0 0 1px var(--main-bt-color);
-            }
-        }
     }
     button {
         background-color: var(--timer-bt-color);

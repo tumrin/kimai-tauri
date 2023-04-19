@@ -18,12 +18,12 @@ strip = true
 tauri-build = { version = "1.2", features = [] }
 
 [dependencies]
-serde_json = "1.0"
-serde = { version = "1.0", features = ["derive"] }
-tauri = { version = "1.2", features = ["notification-all", "shell-open", "system-tray", "updater"] }
+serde_json = { default-features = false, version = "1.0" }
+serde = { version = "1.0", default-features = false }
+tauri = { version = "1.2", features = ["base64", "compression", "notification-all", "shell-open", "system-tray", "updater", "wry"], default-features = false }
 keyring = "2.0.0"
 toml = "0.7.3"
-directories = "4.0.1"
+directories = "5.0.0"
 
 [features]
 # by default Tauri runs in production mode
